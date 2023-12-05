@@ -1,5 +1,3 @@
-import re #regular expressions
-
 gameList = []
 gameidsum = 0
 validgameconditions = {'red': 12, 'green': 13, 'blue': 14}
