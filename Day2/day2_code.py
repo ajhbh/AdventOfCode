@@ -3,6 +3,7 @@ import re #regular expressions
 gameList = []
 gameidsum = 0
 validgameconditions = {'red': 12, 'green': 13, 'blue': 14}
+sumofcubepowers = 0
 
 file = open('Day2/input.txt', 'r')
 lines = file.readlines()
@@ -17,6 +18,8 @@ class Game:
         return "{gameid}: Red={red}, Green={green}, Blue={blue}".format(gameid=self.gameid, red=self.countred, green=self.countgreen, blue=self.countblue)
     def isValid(self, validgameconditions):
         return self.countred <= validgameconditions['red'] and self.countgreen <= validgameconditions['green'] and self.countblue <= validgameconditions['blue']
+    def cubepowers(self):
+        return game.countred * game.countgreen * game.countblue
 
 for line in lines:
     colonsplit = line.split(':')
@@ -44,4 +47,6 @@ for line in lines:
 for game in gameList:
     if game.isValid(validgameconditions):
         gameidsum += game.gameid
-print(gameidsum)
+    sumofcubepowers += game.cubepowers()
+print("GameID sum of valid games = ", gameidsum)
+print("Sum of cube powers = ", sumofcubepowers)
