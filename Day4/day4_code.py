@@ -33,7 +33,9 @@ def parseInputLine(line):
 
     return Game(gameid, winningnumberslist, playernumberslist)
 
+print("\n\n---Part 1---")
 totalpointssum = 0
+gamedict = {} #For part 2, gamedict = {gameid:int: {'game': Game, 'copies': int}}
 for line in lines:
     gameline = parseInputLine(line)
     gamelinewinningnumbercount = gameline.winningPlayerNumbersCount()
@@ -42,5 +44,27 @@ for line in lines:
         gamepoints = 2**(gamelinewinningnumbercount - 1)
         totalpointssum += gamepoints
     print("Gameid=",gameline.gameid,"Points=",gamepoints)
+    #part 2 init
+    gamedict[gameline.gameid] = {'game': gameline, 'copies': 1}
 
 print("Part 1: Sum of all game points =", totalpointssum)
+
+#Part 2:
+
+def updateNextGamesCopies(gameid, addcopies):
+    nextgameid = gameid + 1
+    matchingnumberscount = game.winningPlayerNumbersCount()
+    for i in range(nextgameid, nextgameid + matchingnumberscount):
+        gamedict[i]['copies'] += addcopies
+    return True
+
+print("\n\n---Part 2---")
+totalcopies = 0
+for book in gamedict.values():
+    game = book['game']
+    gameid = game.gameid
+    copies = book['copies']
+    updateNextGamesCopies(gameid, copies)
+    print("GameID=",game.gameid, "Copies=", copies)
+    totalcopies += copies
+print("Part 2: Sum of total copies =" ,totalcopies)
