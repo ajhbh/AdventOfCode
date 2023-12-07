@@ -1,3 +1,5 @@
+mode = 'Part1' #set mode = 'Part1' for first part of question or mode = 'Part2' for second part of question. Changes the seed parsing logic
+
 file = open('Day5/input.txt', 'r')
 lines = file.readlines()
 
@@ -31,11 +33,21 @@ def seedToLocation(seed):
     humiditytolocation = mapping(temperaturetohumidity, locationboundslist)
     return humiditytolocation
 
-def parseData(lines):
-    seedline = lines[0]
+def parseSeedsLine(seedline, mode):
     seedsstring = seedline.split(':')[1]
     seedss = seedsstring.strip().split(' ')
-    [seeds.append(int(x)) for x in seedss]
+    if mode == 'Part1':
+        [seeds.append(int(x)) for x in seedss]
+        return seeds
+    elif mode == 'Part2':
+        for i in range(int(len(seedss)/2)):
+            expandseeds = range(int(seedss[2*i-1]))
+            for j in expandseeds:
+                seeds.append(int(seedss[2*i-2])+j)
+
+def parseData(lines):
+    seedline = lines[0]
+    parseSeedsLine(seedline, mode)
     lines.pop(0)
     table = ''
     for line in lines:
@@ -74,10 +86,6 @@ def writeToList(boundslistname:str, tupletowrite:tuple):
         humidboundslist.append(tupletowrite)
     elif boundslistname == 'locationboundslist':
         locationboundslist.append(tupletowrite)
-
-
-
-
 
 parseData(lines)
 print("InputSeeds=", seeds)
