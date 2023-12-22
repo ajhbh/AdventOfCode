@@ -1,6 +1,6 @@
-mode = 'Part1' #set mode = 'Part1' for first part of question or mode = 'Part2' for second part of question. Changes the seed parsing logic
+mode = 'Part2' #set mode = 'Part1' for first part of question or mode = 'Part2' for second part of question. Changes the seed parsing logic
 
-file = open('Day5/input.txt', 'r')
+file = open('Day5/input_batch.txt', 'r')
 lines = file.readlines()
 
 seeds = []
@@ -18,6 +18,16 @@ def mapping(numberToCheck:int, boundslist:list[tuple]):
         if numberToCheck >= sourcerangebound[0] and numberToCheck < sourcerangebound[1]:
             #destinationrangebound = (bounds[0], bounds[0] + bounds[2])
             difference = int(bounds[0]) - int(bounds[1]) #numberToCheck + difference = result
+            return numberToCheck + difference
+        else:
+            continue
+    return numberToCheck
+def reverseMapping(numberToCheck:int, boundslist:list[tuple]):
+    for bounds in boundslist:
+        sourcerangebound = (int(bounds[0]), int(bounds[0]) + int(bounds[2]))
+        if numberToCheck >= sourcerangebound[0] and numberToCheck < sourcerangebound[1]:
+            #destinationrangebound = (bounds[0], bounds[0] + bounds[2])
+            difference = int(bounds[1]) - int(bounds[0]) #numberToCheck + difference = result
             return numberToCheck + difference
         else:
             continue
@@ -88,14 +98,14 @@ def writeToList(boundslistname:str, tupletowrite:tuple):
         locationboundslist.append(tupletowrite)
 
 parseData(lines)
-print("InputSeeds=", seeds)
-results = {}
+#print("InputSeeds=", seeds)
+#results = {}
 lowestseed = None
 lowestlocation = None
 for seed in seeds:
     location = seedToLocation(seed)
-    results[seed] = location
+    #results[seed] = location
     if lowestlocation == None or lowestlocation > location:
         lowestlocation = location
-        lowestseed = seed
+        #lowestseed = seed
 print("LowestSeed=", lowestseed, "LowestLocation=", lowestlocation)
